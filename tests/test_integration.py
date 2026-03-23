@@ -2,6 +2,7 @@ import pytest
 from api.product_api import create_product
 from pages.login_page import LoginPage
 
+@pytest.mark.integration
 def test_api_ui_integration(setup):
     driver = setup
 

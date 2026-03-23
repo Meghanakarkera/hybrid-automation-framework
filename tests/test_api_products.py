@@ -4,6 +4,7 @@ import pytest
 
 logger = get_logger()
 
+@pytest.mark.api
 def test_get_products():
     response = get_products()
 
@@ -17,7 +18,7 @@ def test_get_products():
 
     logger.info("GET API passed ✅")
 
-
+@pytest.mark.api
 def test_create_product():
     payload = {
         "title": "Automation Product",

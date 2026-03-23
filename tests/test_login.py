@@ -1,5 +1,7 @@
 from pages.login_page import LoginPage
+import pytest
 
+@pytest.mark.ui
 def test_login(setup):
     driver = setup
     login = LoginPage(driver)
