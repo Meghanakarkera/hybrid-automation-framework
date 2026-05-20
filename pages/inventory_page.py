@@ -80,8 +80,8 @@ class InventoryPage:
         checkout_btn = wait.until(
             EC.element_to_be_clickable(self.checkout_btn)
         )
-        self.driver.execute_script("arguments[0].click();", checkout_btn)
-
+        #self.driver.execute_script("arguments[0].click();", checkout_btn)
+        checkout_btn.click()
         # Wait for step one page
         wait.until(EC.visibility_of_element_located(self.first_name))
 
@@ -94,7 +94,8 @@ class InventoryPage:
         continue_btn = wait.until(
             EC.element_to_be_clickable(self.continue_btn)
         )
-        self.driver.execute_script("arguments[0].click();", continue_btn)
+        #self.driver.execute_script("arguments[0].click();", continue_btn)
+        continue_btn.click()
 
         # Check for errors AFTER clicking continue
         error = self.driver.find_elements(By.CLASS_NAME, "error-message-container")
