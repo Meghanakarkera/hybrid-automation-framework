@@ -59,20 +59,10 @@ class InventoryPage:
 
     def safe_type(self, locator, value):
         wait = WebDriverWait(self.driver, 10)
-
-        for _ in range(3):
-            field = wait.until(EC.element_to_be_clickable(locator))
-            field.clear()
-            field.send_keys(value)
-
-            try:
-                #  re-fetch element (VERY IMPORTANT)
-                wait.until(lambda d: d.find_element(*locator).get_attribute("value").strip() == str(value).strip())
-                return
-            except:
-                print(f"Retrying for {value}...")
-
-        raise Exception(f"Unable to enter value: {value}")
+        field = wait.until(EC.element_to_be_clickable(locator))
+        field.click()
+        field.clear()
+        field.send_keys(value)
 
     #  CHECKOUT FLOW
     def checkout(self, fname, lname, zip_code):
