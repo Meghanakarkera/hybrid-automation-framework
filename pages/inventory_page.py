@@ -64,6 +64,11 @@ class InventoryPage:
         field.clear()
         field.send_keys(value)
 
+        if field.get_attribute("value") != str(value):
+            field.click()
+            self.driver.execute_script("arguments[0].value = '';",field)
+            field.send_keys(value)
+
     #  CHECKOUT FLOW
     def checkout(self, fname, lname, zip_code):
         wait = WebDriverWait(self.driver, 10)
