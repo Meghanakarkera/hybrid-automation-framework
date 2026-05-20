@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+import time
 
 class InventoryPage:
 
@@ -48,59 +50,64 @@ class InventoryPage:
         self.driver.find_element(*self.remove_btn).click()
 
     def go_to_cart(self):
-        self.driver.find_element(*self.cart_icon).click()
+        wait = WebDriverWait(self.driver, 10)
+        cart = wait.until(EC.element_to_be_clickable(self.cart_icon))
+        cart.click()
 
+    def safe_type(self, locator, value):
+        wait = WebDriverWait(self.driver, 10)
+
+        for _ in range(3):
+            field = wait.until(EC.element_to_be_clickable(locator))
+            field.clear()
+            field.send_keys(value)
+
+            try:
+                #  re-fetch element (VERY IMPORTANT)
+                wait.until(lambda d: d.find_element(*locator).get_attribute("value") == value)
+                return
+            except:
+                print(f"Retrying for {value}...")
+
+        raise Exception(f"Unable to enter value: {value}")
+
+    #  CHECKOUT FLOW
     def checkout(self, fname, lname, zip_code):
+        wait = WebDriverWait(self.driver, 10)
+
+        # Ensure cart page
+        wait.until(EC.url_contains("cart"))
 
         # Click checkout
-        WebDriverWait(self.driver, 10).until(
+        checkout_btn = wait.until(
             EC.element_to_be_clickable(self.checkout_btn)
-        ).click()
-
-        # Fill form
-        first = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located(self.first_name)
         )
-        first.clear()
-        first.send_keys(fname)
+        self.driver.execute_script("arguments[0].click();", checkout_btn)
 
-        last = self.driver.find_element(*self.last_name)
-        last.clear()
-        last.send_keys(lname)
+        # Wait for step one page
+        wait.until(EC.visibility_of_element_located(self.first_name))
 
-        zipc = self.driver.find_element(*self.postal_code)
-        zipc.clear()
-        zipc.send_keys(zip_code)
+        # Fill details (STABLE)
+        self.safe_type(self.first_name, fname)
+        self.safe_type(self.last_name, lname)
+        self.safe_type(self.postal_code, zip_code)
 
-        # Wait until all values are entered
-        WebDriverWait(self.driver, 10).until(
-            lambda d: first.get_attribute("value") and
-                      last.get_attribute("value") and
-                      zipc.get_attribute("value")
+        # Click Continue
+        continue_btn = wait.until(
+            EC.element_to_be_clickable(self.continue_btn)
         )
+        self.driver.execute_script("arguments[0].click();", continue_btn)
 
-        # Continue button with RETRY logic
-        for i in range(3):
-            try:
-                continue_btn = WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(self.continue_btn)
-                )
-                self.driver.execute_script("arguments[0].click();", continue_btn)
+        # Check for errors AFTER clicking continue
+        error = self.driver.find_elements(By.CLASS_NAME, "error-message-container")
+        if error and error[0].text.strip():
+            raise Exception(f"Checkout failed: {error[0].text}")
 
-                # Wait for next page
-                WebDriverWait(self.driver, 5).until(
-                    EC.url_contains("checkout-step-two")
-                )
-                print("Moved to step-two")
-                break
-            except:
-                print(f"Retrying Continue click... attempt {i + 1}")
+        # Wait for step two
+        wait.until(EC.visibility_of_element_located(self.finish_btn))
 
-        # Final check (fail early if still not moved)
-        assert "checkout-step-two" in self.driver.current_url, "Did not reach checkout step two"
-
-        # Finish button
-        finish_btn = WebDriverWait(self.driver, 15).until(
+        # Click Finish
+        finish_btn = wait.until(
             EC.element_to_be_clickable(self.finish_btn)
         )
         self.driver.execute_script("arguments[0].click();", finish_btn)

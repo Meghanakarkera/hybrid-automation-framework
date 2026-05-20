@@ -25,3 +25,4 @@ def test_checkout_flow(setup):
     success_text = inventory.get_success_message()
 
     assert "THANK YOU" in success_text.upper()
+

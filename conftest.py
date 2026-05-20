@@ -11,12 +11,19 @@ from datetime import datetime
 def setup():
     options = Options()
 
-    #options.add_argument("--headless=new")   # 🔥 updated
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--remote-debugging-port=9222")   # 🔥 important
-    options.add_argument("--window-size=1920,1080")  # 🔥 important
+    options.add_argument("--start-maximized")
+    if os.getenv("CI"):  # running in GitHub Actions
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+
+    # options.add_argument("--headless=new")   # 🔥 updated
+    # options.add_argument("--no-sandbox")
+    # options.add_argument("--disable-dev-shm-usage")
+    # options.add_argument("--disable-gpu")
+    # options.add_argument("--remote-debugging-port=9222")   # 🔥 important
+    # options.add_argument("--window-size=1920,1080")  # 🔥 important
+    # options.add_argument("--single-process")
 
     driver = webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),
@@ -52,7 +59,7 @@ def pytest_runtest_makereport(item, call):
                 driver.save_screenshot(file_path)
 
                 # Attach to HTML report
-                if "pytest_html" in item.config.pluginmanager.plugins:
+                if item.config.pluginmanager.hasplugin("html"):
                     extra = getattr(report, "extra", [])
                     extra.append(pytest_html.extras.image(file_path))
                     report.extra = extra
