@@ -1,6 +1,9 @@
 import pytest
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 @pytest.mark.ui
 def test_remove_from_cart(setup):
@@ -15,5 +18,8 @@ def test_remove_from_cart(setup):
     inventory.remove_product()
 
     # Optional: verify cart badge disappears
-    elements = driver.find_elements("class name", "shopping_cart_badge")
-    assert len(elements) == 0
+    badge_disappeared = WebDriverWait(driver, timeout=5).until(
+        EC.invisibility_of_element_located((By.CLASS_NAME, "shopping_cart_badge"))
+    )
+
+    assert badge_disappeared

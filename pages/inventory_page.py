@@ -22,7 +22,10 @@ class InventoryPage:
         self.driver.find_element(*self.add_to_cart_btn).click()
 
     def get_cart_count(self):
-        return self.driver.find_element(*self.cart_badge).text
+        element = WebDriverWait(self.driver, timeout=5).until(
+            EC.visibility_of_element_located(self.cart_badge)
+        )
+        return element.text
 
     def logout(self):
         self.driver.find_element(*self.menu_btn).click()
