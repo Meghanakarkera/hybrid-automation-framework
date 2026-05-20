@@ -55,7 +55,8 @@ class InventoryPage:
     def go_to_cart(self):
         wait = WebDriverWait(self.driver, 10)
         cart = wait.until(EC.element_to_be_clickable(self.cart_icon))
-        cart.click()
+        self.driver.execute_script("arguments[0].click();", cart)
+        #cart.click()
 
     def safe_type(self, locator, value):
         wait = WebDriverWait(self.driver, 10)
@@ -109,7 +110,8 @@ class InventoryPage:
         finish_btn = wait.until(
             EC.element_to_be_clickable(self.finish_btn)
         )
-        self.driver.execute_script("arguments[0].click();", finish_btn)
+        #self.driver.execute_script("arguments[0].click();", finish_btn)
+        finish_btn.click()
 
     def get_success_message(self):
         return WebDriverWait(self.driver, 15).until(
