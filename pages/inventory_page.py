@@ -67,7 +67,7 @@ class InventoryPage:
 
             try:
                 #  re-fetch element (VERY IMPORTANT)
-                wait.until(lambda d: d.find_element(*locator).get_attribute("value") == value)
+                wait.until(lambda d: field.get_attribute("value") == str(value))
                 return
             except:
                 print(f"Retrying for {value}...")
