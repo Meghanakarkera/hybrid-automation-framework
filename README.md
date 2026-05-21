@@ -16,9 +16,12 @@ This project is a hybrid automation testing framework combining Selenium UI test
 - CI/CD using GitHub Actions
 
 ## 🧪 Test Scenarios
-- Login functionality testing (UI)
+- Login functionality testing
+- Add to cart functionality
+- Remove from cart functionality
+- Checkout flow testing
 - Product API validation (GET & POST)
-- End-to-end integration testing
+- API + UI integration testing
 
 ## 🛠️ Tech Stack
 - Python
@@ -26,6 +29,7 @@ This project is a hybrid automation testing framework combining Selenium UI test
 - Pytest
 - Requests
 - WebDriver Manager
+- GitHub Actions
 
 ## ▶️ How to Run the Project
 
@@ -33,15 +37,25 @@ This project is a hybrid automation testing framework combining Selenium UI test
 pip install -r requirements.txt
 
 2. Run tests:
+pytest
+
+3. Generate HTML Report
 pytest --html=report.html
 
 ## 📂 Project Structure
-tests/ → Test cases  
-pages/ → Page Object Model files  
-api/ → API functions  
-utils/ → Logger, helpers  
-logs/ → Execution logs  
-screenshots/ → Failure screenshots  
+hybrid-automation-framework/
+│
+├── tests/           # UI, API, and integration test cases
+├── pages/           # Page Object Model (POM) classes
+├── api/             # API request functions
+├── utils/           # Logger and utility/helper functions
+├── logs/            # Execution logs
+├── screenshots/    # Failure screenshots
+├── reports/         # HTML test reports
+├── .github/workflows/   # GitHub Actions CI pipeline
+├── requirements.txt
+├── pytest.ini
+└── README.md
 
 ## 👩‍💻 Author
 Meghana D S
