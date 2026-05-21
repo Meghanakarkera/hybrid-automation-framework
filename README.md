@@ -1,3 +1,4 @@
+[![Run Automation Tests](https://github.com/Meghanakarkera/hybrid-automation-framework/actions/workflows/test.yml/badge.svg)](https://github.com/Meghanakarkera/hybrid-automation-framework/actions/workflows/test.yml)
 # Hybrid Automation Framework (UI + API)
 
 ## 📌 Project Description
