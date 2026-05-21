@@ -44,17 +44,21 @@ pytest --html=report.html
 ```text
 hybrid-automation-framework/
 │
-├── tests/                 # UI, API, and integration test cases
-├── pages/                 # Page Object Model (POM) classes
-├── api/                   # API request functions
-├── utils/                 # Logger and helper functions
-├── logs/                  # Execution logs
-├── screenshots/           # Failure screenshots
-├── reports/               # HTML test reports
 ├── .github/workflows/     # GitHub Actions CI pipeline
-├── requirements.txt
-├── pytest.ini
-└── README.md
+├── api/                   # API request functions
+├── assets/                # Test assets/resources
+├── logs/                  # Execution logs
+├── pages/                 # Page Object Model (POM) classes
+├── screenshots/           # Failure screenshots
+├── tests/                 # UI, API, and integration test cases
+├── utils/                 # Logger and helper functions
+│
+├── conftest.py            # Pytest fixtures and setup
+├── main.py                # Entry point (if used)
+├── pytest.ini             # Pytest configuration
+├── requirements.txt       # Project dependencies
+├── README.md
+└── report.html            # Generated HTML report
 ```
 
 ## 👩‍💻 Author
