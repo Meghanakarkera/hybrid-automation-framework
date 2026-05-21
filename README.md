@@ -37,22 +37,19 @@ This project is a hybrid automation testing framework combining Selenium UI test
 pip install -r requirements.txt
 
 2. Run tests:
-pytest
-
-3. Generate HTML Report
 pytest --html=report.html
 
 ## 📂 Project Structure
 hybrid-automation-framework/
 │
-├── tests/           # UI, API, and integration test cases
-├── pages/           # Page Object Model (POM) classes
-├── api/             # API request functions
-├── utils/           # Logger and utility/helper functions
-├── logs/            # Execution logs
-├── screenshots/    # Failure screenshots
-├── reports/         # HTML test reports
-├── .github/workflows/   # GitHub Actions CI pipeline
+├── tests/                 # UI, API, and integration test cases
+├── pages/                 # Page Object Model (POM) classes
+├── api/                   # API request functions
+├── utils/                 # Logger and helper functions
+├── logs/                  # Execution logs
+├── screenshots/           # Failure screenshots
+├── reports/               # HTML test reports
+├── .github/workflows/     # GitHub Actions CI pipeline
 ├── requirements.txt
 ├── pytest.ini
 └── README.md
