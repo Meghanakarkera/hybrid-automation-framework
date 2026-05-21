@@ -40,6 +40,8 @@ pip install -r requirements.txt
 pytest --html=report.html
 
 ## 📂 Project Structure
+
+```text
 hybrid-automation-framework/
 │
 ├── tests/                 # UI, API, and integration test cases
@@ -53,6 +55,7 @@ hybrid-automation-framework/
 ├── requirements.txt
 ├── pytest.ini
 └── README.md
+```
 
 ## 👩‍💻 Author
 Meghana D S
