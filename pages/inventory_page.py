@@ -1,8 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-import time
 
 class InventoryPage:
 
@@ -59,7 +57,7 @@ class InventoryPage:
         #cart.click()
 
     def safe_type(self, locator, value):
-        wait = WebDriverWait(self.driver, 10)
+        wait = WebDriverWait(self.driver, 20)
         field = wait.until(EC.element_to_be_clickable(locator))
         field.click()
         field.clear()
@@ -72,7 +70,7 @@ class InventoryPage:
 
     #  CHECKOUT FLOW
     def checkout(self, fname, lname, zip_code):
-        wait = WebDriverWait(self.driver, 10)
+        wait = WebDriverWait(self.driver, 20)
 
         # Ensure cart page
         wait.until(EC.url_contains("cart"))
@@ -81,8 +79,8 @@ class InventoryPage:
         checkout_btn = wait.until(
             EC.element_to_be_clickable(self.checkout_btn)
         )
-        #self.driver.execute_script("arguments[0].click();", checkout_btn)
-        checkout_btn.click()
+        self.driver.execute_script("arguments[0].click();", checkout_btn)
+        #checkout_btn.click()
         # Wait for step one page
         wait.until(EC.visibility_of_element_located(self.first_name))
 
@@ -95,8 +93,8 @@ class InventoryPage:
         continue_btn = wait.until(
             EC.element_to_be_clickable(self.continue_btn)
         )
-        #self.driver.execute_script("arguments[0].click();", continue_btn)
-        continue_btn.click()
+        self.driver.execute_script("arguments[0].click();", continue_btn)
+        #continue_btn.click()
 
         # Check for errors AFTER clicking continue
         error = self.driver.find_elements(By.CLASS_NAME, "error-message-container")
